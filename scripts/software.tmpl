@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# setting up the environment:
+# export EASYBUILD_SOURCEPATH=/app/sources
+# export EASYBUILD_INSTALLPATH=/app
+# export EASYBUILD_TMPDIR=/dev/shm/easybuild
+# export EASYBUILD_PARALLEL=16
+alias eb="eb --robot --download-timeout=1000"
+
+# loading the right EasyBuild module:
+ml EasyBuild/${EB_VERSION}
+
+# check what we got
+eb --version
+
+# check the loaded modules
+ml
+
+# building stuff
+eb --fetch ${SW_LIST} 
+eb ${SW_LIST} 
+
+# check all modules
+ml spider
+
