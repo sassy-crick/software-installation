@@ -18,7 +18,7 @@
 SOFTWARE_HOME="/scr/apps"
 # SOFTWARE_HOME="/scratch/users/$(whoami)"
 # Which container name to be used:
-CONTAINER_VERSION="eb-4.4.1-Lmod-ubuntu20-LTR-2.sif"
+CONTAINER_VERSION="eb-4.4.1-Lmod-ubuntu20-LTR.sif"
 # Which EasyBuild version to be used for the software installation:
 EB_VERSION="4.5.0"
 # Where is the list of the software to be installed:
