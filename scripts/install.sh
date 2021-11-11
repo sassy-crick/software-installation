@@ -66,7 +66,7 @@ fi
 
 # We create the software.sh file on the fly in the right place. Any previous version will be removed.
 rm -f ${SOFTWARE}
-envsubst '${EB_VERSION},${SW_LIST}' < /scr/build/software/scripts/software.tmpl > ${SOFTWARE} 
+envsubst '${EB_VERSION},${SW_LIST}' < ./software.tmpl > ${SOFTWARE} 
 chmod a+x ${SOFTWARE}
 
 # We check if we got the fuse-overly installed and if not, install it
