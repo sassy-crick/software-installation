@@ -2,14 +2,20 @@
 
 # setting up the environment:
 shopt -s expand_aliases
-# export EASYBUILD_SOURCEPATH=/app/sources
-# export EASYBUILD_INSTALLPATH=/app
-export EASYBUILD_TMPDIR=/dev/shm/easybuild
+# export EASYBUILD_SOURCEPATH="/app/sources"
+# export EASYBUILD_INSTALLPATH="/app"
+export EASYBUILD_TMPDIR="/dev/shm/easybuild"
 export EASYBUILD_BUILDPATH="/dev/shm/easybuild"
 # export EASYBUILD_PARALLEL=16
-export EASYBUILD_ACCEPT_EULA_FOR=Intel-oneAPI,NVHPC
-export MODULEPATH=/app/modules/all
+export EASYBUILD_ACCEPT_EULA_FOR="Intel-oneAPI,NVHPC"
+export MODULEPATH="/app/modules/all"
 alias eb="eb --robot --download-timeout=1000"
+
+# we need this to get some software installed as
+# USER is not defined inside the container
+# whereas HOME is:
+USER=$(whoami)
+export USER
 
 # loading the right EasyBuild module:
 ml EasyBuild/${EB_VERSION}
