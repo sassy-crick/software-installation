@@ -15,7 +15,7 @@ alias eb="eb --robot --download-timeout=1000"
 # USER is not defined inside the container
 # whereas HOME is:
 USER=$(whoami)
-export USER
+export ${USER}
 
 # loading the right EasyBuild module:
 ml EasyBuild/${EB_VERSION}
