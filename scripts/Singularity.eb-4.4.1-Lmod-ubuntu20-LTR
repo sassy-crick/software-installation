@@ -19,6 +19,7 @@ apt install -y libssl-dev
 apt install -y binutils libthread-queue-any-perl
 apt install -y procps
 apt install -y man libdb-dev
+apt clean
 
 # install EasyBuild using pip3
 pip3 install -U pip
@@ -51,12 +52,12 @@ set -ve
 set -o noclobber
 # We set this so if we need to open the container again, we got the environment set up correctly
 cat >> /home/easybuild/.bashrc << 'EOG'
-export EASYBUILD_PREFIX=/scratch
-export EASYBUILD_TMPDIR=/scratch/tmp
-export EASYBUILD_SOURCEPATH=/scratch/sources:/tmp/easybuild/sources
+export EASYBUILD_SOURCEPATH=/software/easybuild/sources
 export EASYBUILD_INSTALLPATH=/app
-export EASYBUILD_PARALLEL=4
-export EB_PYTHON=python3
+export EASYBUILD_TMPDIR=/dev/shm/easybuild
+export EASYBUILD_BUILDPATH="/dev/shm/easybuild"
+export EASYBUILD_PARALLEL=1
+export EASYBUILD_ACCEPT_EULA_FOR=Intel-oneAPI,NVHPC
 export MODULEPATH=/app/modules/all
 alias eb="eb --robot --download-timeout=1000"
 EOG
@@ -65,12 +66,13 @@ EOG
 cat > /home/easybuild/eb-install.sh << 'EOD'
 #!/bin/bash  
 shopt -s expand_aliases
-export EASYBUILD_PREFIX=/scratch 
-export EASYBUILD_TMPDIR=/scratch/tmp 
-export EASYBUILD_SOURCEPATH=/scratch/sources:/tmp/easybuild/sources 
-export EASYBUILD_INSTALLPATH=/app 
-export EASYBUILD_PARALLEL=4
-export EB_PYTHON=python3
+export EASYBUILD_SOURCEPATH=/software/easybuild/sources
+export EASYBUILD_INSTALLPATH=/app
+export EASYBUILD_TMPDIR=/dev/shm/easybuild
+export EASYBUILD_BUILDPATH="/dev/shm/easybuild"
+export EASYBUILD_PARALLEL=1
+export EASYBUILD_ACCEPT_EULA_FOR=Intel-oneAPI,NVHPC
+export MODULEPATH=/app/modules/all
 alias eb="eb --robot --download-timeout=1000"
 EOD
 cat >> /home/easybuild/eb-install.sh << 'EOD'
@@ -79,11 +81,6 @@ $LMOD_DIR/update_lmod_system_cache_files -d /app/lmodcache -t /app/lmodcache/tim
 EOD
 
 chmod a+x /home/easybuild/eb-install.sh
-
-# su -l easybuild -c /home/easybuild/eb-install.sh
-
-# cleanup, everything in /scratch is assumed to be temporary
-rm -rf /scratch/*
 
 %runscript
 eval "$@"
@@ -101,15 +98,11 @@ module --force purge
 module unuse $MODULEPATH
 # pick up modules installed in /app
 module use /app/modules/all
-# load module(s) corresponding to installed software
 # setting up the installation environment:
-export EASYBUILD_SOURCEPATH=/app/sources
-export EASYBUILD_INSTALLPATH=/app
-export EASYBUILD_TMPDIR=/dev/shm/easybuild
-export EASYBUILD_PARALLEL=16
-alias eb="eb --robot --download-timeout=1000"
+USER=$(whoami)
  
 %labels
 Author J. Sassmannshausen <jorg.sassmannshausen@kcl.ac.uk>
 EasyBuild version 4.4.1
+Software build container
 
