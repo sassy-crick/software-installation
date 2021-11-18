@@ -10,7 +10,7 @@ apt dist-upgrade -y
 apt install -y python3 python3-setuptools lmod
 apt install -y python3-pip
 apt install -y bzip2 gzip tar zip unzip xz-utils 
-apt install -y curl wget
+apt install -y curl wget rsync
 apt install -y patch make
 apt install -y file git debianutils
 apt install -y gcc 
@@ -24,9 +24,8 @@ apt clean
 # install EasyBuild using pip3
 pip3 install -U pip
 pip3 install wheel
-pip3 install -U setuptools
-pip3 install 'vsc-install<0.11.4' 'vsc-base<2.9.0'
-pip3 install easybuild==4.4.1
+pip3 install -U setuptools==58.5.3
+pip3 install easybuild==4.4.2
 pip3 install rich
 
 # create 'easybuild' user (if missing)
@@ -103,6 +102,6 @@ USER=$(whoami)
  
 %labels
 Author J. Sassmannshausen <jorg.sassmannshausen@kcl.ac.uk>
-EasyBuild version 4.4.1
+EasyBuild version 4.4.2
 Software build container
 
