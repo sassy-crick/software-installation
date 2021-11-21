@@ -13,7 +13,7 @@ apt install -y bzip2 gzip tar zip unzip xz-utils
 apt install -y curl wget rsync
 apt install -y patch make
 apt install -y file git debianutils
-apt install -y gcc 
+apt install -y gcc libxml2-dev 
 apt install -y libibverbs-dev 
 apt install -y libssl-dev
 apt install -y binutils libthread-queue-any-perl
@@ -59,6 +59,7 @@ export EASYBUILD_PARALLEL=1
 export EASYBUILD_ACCEPT_EULA_FOR=Intel-oneAPI,NVHPC
 export MODULEPATH=/app/modules/all
 alias eb="eb --robot --download-timeout=1000"
+export PYTHONIOENCODING='utf-8'
 EOG
 
 # configure EasyBuild
@@ -73,6 +74,7 @@ export EASYBUILD_PARALLEL=1
 export EASYBUILD_ACCEPT_EULA_FOR=Intel-oneAPI,NVHPC
 export MODULEPATH=/app/modules/all
 alias eb="eb --robot --download-timeout=1000"
+export PYTHONIOENCODING='utf-8'
 EOD
 cat >> /home/easybuild/eb-install.sh << 'EOD'
 mkdir -p /app/lmodcache 
