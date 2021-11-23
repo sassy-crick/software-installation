@@ -104,6 +104,16 @@ module unuse $MODULEPATH
 module use /app/modules/all
 # setting up the installation environment:
 USER=$(whoami)
+shopt -s expand_aliases
+export EASYBUILD_SOURCEPATH=/software/easybuild/sources
+export EASYBUILD_INSTALLPATH=/apps/easybuild
+export EASYBUILD_TMPDIR=/dev/shm/easybuild
+export EASYBUILD_BUILDPATH="/dev/shm/easybuild"
+export EASYBUILD_PARALLEL=36
+export EASYBUILD_ACCEPT_EULA_FOR=Intel-oneAPI,NVHPC
+export MODULEPATH=/apps/easybuild/modules/all
+export PYTHONIOENCODING='utf-8'
+alias eb="eb --robot --download-timeout=1000"
  
 %labels
 Author J. Sassmannshausen <jorg.sassmannshausen@kcl.ac.uk>
