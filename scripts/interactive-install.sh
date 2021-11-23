@@ -43,7 +43,7 @@ OVERLAY_BASEDIR="${SOFTWARE_HOME}"
 OVERLAY_LOWERDIR="${OVERLAY_BASEDIR}/lower"
 OVERLAY_UPPERDIR="${OVERLAY_BASEDIR}/apps"
 OVERLAY_WORKDIR="${OVERLAY_BASEDIR}/work"
-OVERLAY_MOUNTPOINT="/apps"
+OVERLAY_MOUNTPOINT="/apps/easybuild"
 CONTAINER_DIR="${SOFTWARE_INSTDIR}/containers"
 CONTAINER="${CONTAINER_DIR}/${CONTAINER_VERSION}"
 SCRIPTS_DIR="${OVERLAY_BASEDIR}/scripts"
@@ -93,6 +93,7 @@ fi
 # If the directory exist and the latest EasyBuild module is there, we simply install the
 # software stack which we provide. 
 if [ -e ${OVERLAY_UPPERDIR}/modules/all/EasyBuild/${EB_VERSION}.lua ]; then
+	echo "This container is running on ${ARCH}"
 	# We can execute the container and tell it what to do:
  	singularity shell --bind ${BINDDIR} --bind ${SOURCEDIR} --fusemount "container:${OVERLAY_BASEDIR}/fuse-overlayfs -o lowerdir=${OVERLAY_LOWERDIR} \
 	-o upperdir=${OVERLAY_UPPERDIR} -o workdir=${OVERLAY_WORKDIR} ${OVERLAY_MOUNTPOINT}" ${CONTAINER} ${SOFTWARE}
