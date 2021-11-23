@@ -57,6 +57,7 @@ echo "Installation started at $(date)"
 if [ -d ${SOFTWARE_INSTDIR} ]; then
 	echo "Making sure all direcotries exist in ${SOFTWARE_HOME} "
 	mkdir -p ${OVERLAY_BASEDIR}/{lower,apps,work,scripts}
+	mkdir -p ${SOFTWARE_INSTDIR}/sources
 else
 	echo "It appears that ${SOFTWARE_HOME} does not exist"
 	echo "Please make sure the provided path is correct and make the required directory"
