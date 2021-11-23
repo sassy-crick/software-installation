@@ -12,6 +12,8 @@
 # 23/11/2021: Installation path changed to /pps/easybuild
 
 # Some defaults
+# Where is the script located?
+BASEDIR=$(dirname "$0")
 
 # We need to know which architecture we are running on.
 # This is right now a bit of a hack
@@ -72,7 +74,7 @@ fi
 
 # We create the software.sh file on the fly in the right place. Any previous version will be removed.
 rm -f ${SOFTWARE}
-envsubst '${EB_VERSION},${SW_LIST}' < /users/hpcbuild/build/software.tmpl > ${SOFTWARE} 
+envsubst '${EB_VERSION},${SW_LIST}' < ${BASEDIR}/software.tmpl > ${SOFTWARE} 
 chmod a+x ${SOFTWARE}
 
 # We check if we got the fuse-overly installed and if not, install it
