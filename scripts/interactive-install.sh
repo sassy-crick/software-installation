@@ -8,7 +8,7 @@
 # later for production. 
 # 28/10/2021: initial testing
 # 09/11/2021: some tidy up
-# 16/11/2021: Singularity container to EB 4.4.2 upgraded
+# 18/11/2021: Singularity container to EB 4.4.2 upgraded
 # 23/11/2021: Installation path changed to /pps/easybuild
 
 # Some defaults
@@ -43,8 +43,7 @@ OVERLAY_BASEDIR="${SOFTWARE_HOME}"
 OVERLAY_LOWERDIR="${OVERLAY_BASEDIR}/lower"
 OVERLAY_UPPERDIR="${OVERLAY_BASEDIR}/apps"
 OVERLAY_WORKDIR="${OVERLAY_BASEDIR}/work"
-OVERLAY_MOUNTPOINT="/app"
-# CONTAINER_DIR=${OVERLAY_BASEDIR}/containers
+OVERLAY_MOUNTPOINT="/apps"
 CONTAINER_DIR="${SOFTWARE_INSTDIR}/containers"
 CONTAINER="${CONTAINER_DIR}/${CONTAINER_VERSION}"
 SCRIPTS_DIR="${OVERLAY_BASEDIR}/scripts"
