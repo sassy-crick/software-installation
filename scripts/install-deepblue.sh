@@ -7,30 +7,24 @@
 # software.sh script. That will be replaced with a yml file
 # later for production. 
 # 28/10/2021: initial testing
-# 09/11/2021: some tidy up
-# 18/11/2021: Singularity container to EB 4.2.2 upgraded
-# 23/11/2021: Installation path changed to /pps/easybuild
+# 09/11/2921: some tidy up
 
 # Some defaults
-
-# We need to know which architecture we are running on.
-# This is right now a bit of a hack
-ARCH=$(cd /users/hpcbuild/build/tox/black && ./bin/python3 ./bin/eessi_software_subdir.py | awk -F"/" '{print $2"/"$3}')
 
 # We need to set the right paths first.
 # We do that via variables up here:
 # These are the only bits which need to be modified:
 # Where to install the software:
-SOFTWARE_INSTDIR="/software/easybuild"
-SOFTWARE_HOME="${SOFTWARE_INSTDIR}/${ARCH}"
+SOFTWARE_HOME="/scr/apps"
+# SOFTWARE_HOME="/scratch/users/$(whoami)"
 # Which container name to be used:
-CONTAINER_VERSION="eb-4.4.2-Lmod-ubuntu20-LTR-3.8.4.sif"
+CONTAINER_VERSION="eb-4.4.1-Lmod-ubuntu20-LTR-3.8.4.sif"
 # Which EasyBuild version to be used for the software installation:
 EB_VERSION="4.5.0"
 # Where is the list of the software to be installed:
-SW_LIST=$(cat ./softwarelist.txt)
+SW_LIST=$(cat ${SOFTWARE_HOME}/softwarelist.txt)
 # We might need to bind an additional external directory into the container:
-BINDDIR="/software:/software"
+BINDDIR="/scr:/scr"
 
 # We need to export them so we can modify the template for the software to be installed
 export EB_VERSION
@@ -38,23 +32,23 @@ export SW_LIST
 
 #########################################################################################
 # These should not need to be touched
-OVERLAY_BASEDIR="${SOFTWARE_HOME}"
-OVERLAY_LOWERDIR="${OVERLAY_BASEDIR}/lower"
-OVERLAY_UPPERDIR="${OVERLAY_BASEDIR}/apps"
-OVERLAY_WORKDIR="${OVERLAY_BASEDIR}/work"
-OVERLAY_MOUNTPOINT="/apps"
-CONTAINER_DIR="${SOFTWARE_INSTDIR}/containers"
-CONTAINER="${CONTAINER_DIR}/${CONTAINER_VERSION}"
-SCRIPTS_DIR="${OVERLAY_BASEDIR}/scripts"
-SOFTWARE="${SCRIPTS_DIR}/software.sh"
+OVERLAY_BASEDIR=${SOFTWARE_HOME}/software
+OVERLAY_LOWERDIR=${OVERLAY_BASEDIR}/lower
+OVERLAY_UPPERDIR=${OVERLAY_BASEDIR}/apps
+OVERLAY_WORKDIR=${OVERLAY_BASEDIR}/work
+OVERLAY_MOUNTPOINT="/app"
+CONTAINER_DIR=${OVERLAY_BASEDIR}/containers
+CONTAINER=${CONTAINER_DIR}/${CONTAINER_VERSION}
+SCRIPTS_DIR=${OVERLAY_BASEDIR}/scripts
+SOFTWARE=${SCRIPTS_DIR}/"software.sh"
 #########################################################################################
 
 echo "Installation started at $(date)"
 
 # We check if the folders are here, if not we install them
-if [ -d ${SOFTWARE_INSTDIR} ]; then
+if [ -d ${SOFTWARE_HOME} ]; then
 	echo "Making sure all direcotries exist in ${SOFTWARE_HOME} "
-	mkdir -p ${OVERLAY_BASEDIR}/{lower,apps,work,scripts}
+	mkdir -p ${OVERLAY_BASEDIR}/{lower,apps,work,containers,scripts}
 else
 	echo "It appears that ${SOFTWARE_HOME} does not exist"
 	echo "Please make sure the provided path is correct and make the required directory"
@@ -72,7 +66,7 @@ fi
 
 # We create the software.sh file on the fly in the right place. Any previous version will be removed.
 rm -f ${SOFTWARE}
-envsubst '${EB_VERSION},${SW_LIST}' < /users/hpcbuild/build/software.tmpl > ${SOFTWARE} 
+envsubst '${EB_VERSION},${SW_LIST}' < ./software.tmpl > ${SOFTWARE} 
 chmod a+x ${SOFTWARE}
 
 # We check if we got the fuse-overly installed and if not, install it
@@ -98,7 +92,6 @@ fi
 # software stack which we provide. 
 if [ -e ${OVERLAY_UPPERDIR}/modules/all/EasyBuild/${EB_VERSION}.lua ]; then
 	echo "We are installing the software as defined in ${SOFTWARE}"
-    cat "${SOFTWARE}"
 	# We can execute the container and tell it what to do:
  	singularity exec --bind ${BINDDIR} --fusemount "container:${OVERLAY_BASEDIR}/fuse-overlayfs -o lowerdir=${OVERLAY_LOWERDIR} \
 	-o upperdir=${OVERLAY_UPPERDIR} -o workdir=${OVERLAY_WORKDIR} ${OVERLAY_MOUNTPOINT}" ${CONTAINER} ${SOFTWARE}
