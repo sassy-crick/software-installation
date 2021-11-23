@@ -79,10 +79,6 @@ alias eb="eb --robot --download-timeout=1000"
 export PYTHONIOENCODING='utf-8'
 ulimit -l unlimited
 EOD
-cat >> /home/easybuild/eb-install.sh << 'EOD'
-mkdir -p /apps/easybuild/lmodcache 
-$LMOD_DIR/update_lmod_system_cache_files -d /apps/easybuild/lmodcache -t /apps/easybuild/lmodcache/timestamp /apps/easybuild/modules/all  
-EOD
 
 chmod a+x /home/easybuild/eb-environment.sh
 
