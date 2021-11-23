@@ -55,7 +55,7 @@ echo "Installation started at $(date)"
 
 # We check if the folders are here, if not we install them
 if [ -d ${SOFTWARE_INSTDIR} ]; then
-	echo "Making sure all direcotries exist in ${SOFTWARE_HOME} "
+	echo "Making sure all directories exist in ${SOFTWARE_HOME} "
 	mkdir -p ${OVERLAY_BASEDIR}/{lower,apps,work,scripts}
 	mkdir -p ${SOFTWARE_INSTDIR}/sources
 else
