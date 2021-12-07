@@ -78,6 +78,10 @@ export MODULEPATH=/apps/easybuild/modules/all
 alias eb="eb --robot --download-timeout=1000"
 export PYTHONIOENCODING='utf-8'
 ulimit -l unlimited
+# For interative runs, we need to remove all the SLURM environments
+echo "For interactive runs, please do:"
+echo "# for i in $(export | grep SLURM); do unset $( echo $i | grep SLURM | awk -F "=" '{print $1}' )  ; done"
+echo "# for i in $(export | grep SLURM); do echo $i; done"
 EOD
 
 chmod a+x /home/easybuild/eb-environment.sh
