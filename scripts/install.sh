@@ -8,8 +8,8 @@
 # later for production. 
 # 28/10/2021: initial testing
 # 09/11/2021: some tidy up
-# 18/11/2021: Singularity container to EB 4.2.2 upgraded
-# 23/11/2021: Installation path changed to /pps/easybuild
+# 18/11/2021: Singularity container to EB 4.4.2 upgraded
+# 23/11/2021: Installation path changed to /apps/easybuild
 
 # Some defaults
 # Where is the script located?
