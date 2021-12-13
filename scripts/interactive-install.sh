@@ -91,7 +91,7 @@ if [ -e ${OVERLAY_UPPERDIR}/modules/all/EasyBuild/${EB_VERSION}.lua ]; then
 	echo "This container is running on ${ARCH}"
 	# We can execute the container and tell it what to do:
  	singularity shell --bind ${BINDDIR} --bind ${SOURCEDIR} --fusemount "container:${OVERLAY_BASEDIR}/fuse-overlayfs -o lowerdir=${OVERLAY_LOWERDIR} \
-	-o upperdir=${OVERLAY_UPPERDIR} -o workdir=${OVERLAY_WORKDIR} ${OVERLAY_MOUNTPOINT}" ${CONTAINER} ${SOFTWARE}
+	-o upperdir=${OVERLAY_UPPERDIR} -o workdir=${OVERLAY_WORKDIR} ${OVERLAY_MOUNTPOINT}" ${CONTAINER} 
 fi
 
 echo "Installation finished at $(date)"
