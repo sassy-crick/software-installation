@@ -1,0 +1,7 @@
+software:
+  EasyBuild:
+    toolchains:
+      SYSTEM:
+        versions: [4.3.1]
+
+

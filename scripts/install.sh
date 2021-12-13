@@ -28,15 +28,14 @@ SOFTWARE_HOME="${SOFTWARE_INSTDIR}/${ARCH}"
 # Which container name to be used:
 CONTAINER_VERSION="eb-4.4.2-Lmod-ubuntu20-LTR-3.8.4.sif"
 # Which EasyBuild version to be used for the software installation:
-EB_VERSION="4.5.0"
+EB_VERSION="4.5.1"
 # Where is the list of the software to be installed:
-SW_LIST=$(cat ./softwarelist.txt)
+# The first one is for a list of EasyConfig files
+SW_NAME="softwarelist.txt"
+# This one is for an EasyStack file in yaml format:
+SW_YAML="softwarelist.yaml"
 # We might need to bind an additional external directory into the container:
 BINDDIR="/software:/software"
-
-# We need to export them so we can modify the template for the software to be installed
-export EB_VERSION
-export SW_LIST
 
 #########################################################################################
 # These should not need to be touched
@@ -74,8 +73,22 @@ if [ ! -f ${CONTAINER} ]; then
 fi
 
 # We create the software.sh file on the fly in the right place. Any previous version will be removed.
-rm -f ${SOFTWARE}
-envsubst '${EB_VERSION},${SW_LIST}' < ${BASEDIR}/software.tmpl > ${SOFTWARE} 
+# We need to export these variables so we can modify the template for the software to be installed
+export EB_VERSION
+# export SW_LIST # we do this further down!
+export SW_YAML
+rm -f ${SOFTWARE} ${SCRIPT_DIR}/${SW_YAML}
+envsubst '${EB_VERSION}' < ${BASEDIR}/software-head.tmpl > ${SOFTWARE} 
+if [ -s ${BASEDIR}/${SW_NAME} ]; then
+        SW_LIST=$(cat ${SW_NAME})
+        export SW_LIST
+        envsubst '${SW_LIST}' < ${BASEDIR}/software-list.tmpl >> ${SOFTWARE} 
+fi
+if [ -s ${SW_YAML} ]; then
+        envsubst '${SW_YAML}' < ${BASEDIR}/software-yaml.tmpl >> ${SOFTWARE} 
+        cp -f ${BASEDIR}/${SW_YAML} ${SCRIPTS_DIR}
+fi
+cat ${BASEDIR}/software-bottom.tmpl >> ${SOFTWARE}
 chmod a+x ${SOFTWARE}
 
 # We check if we got the fuse-overly installed and if not, install it
