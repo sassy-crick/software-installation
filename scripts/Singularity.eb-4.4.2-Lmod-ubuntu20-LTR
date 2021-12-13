@@ -27,6 +27,7 @@ pip3 install wheel
 pip3 install -U setuptools==58.5.3
 pip3 install easybuild==4.4.2
 pip3 install rich
+pip3 install PyYAML
 
 # create 'easybuild' user (if missing)
 id easybuild || useradd -s /bin/bash -m easybuild
