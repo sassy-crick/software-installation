@@ -104,7 +104,7 @@ if [ ! -d ${OVERLAY_UPPERDIR}/modules/all/EasyBuild ]; then
 		singularity exec --bind ${BINDDIR} --fusemount "container:${OVERLAY_BASEDIR}/fuse-overlayfs -o lowerdir=${OVERLAY_LOWERDIR} \
 		-o upperdir=${OVERLAY_UPPERDIR} -o workdir=${OVERLAY_WORKDIR} ${OVERLAY_MOUNTPOINT}" ${CONTAINER} eb --install-latest-eb-release
 	elif [ ! -e ${OVERLAY_UPPERDIR}/modules/all/EasyBuild/${EB_VERSION}.lua ]; then
-	       	echo "We are upgrading EasyBuild to the latest version and then stop."
+	       	echo "We are upgrading EasyBuild to the latest version and then continue with the installation."
 		# We can execute the container and tell it what to do:
 		singularity exec --bind ${BINDDIR} --fusemount "container:${OVERLAY_BASEDIR}/fuse-overlayfs -o lowerdir=${OVERLAY_LOWERDIR} \
 		-o upperdir=${OVERLAY_UPPERDIR} -o workdir=${OVERLAY_WORKDIR} ${OVERLAY_MOUNTPOINT}" ${CONTAINER} eb --install-latest-eb-release
