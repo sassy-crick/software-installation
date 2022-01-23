@@ -97,7 +97,7 @@ export ARCH
 mkdir -p ${SCRIPTS_DIR} ${LOG_DIR}
 
 # We create the software.sh file on the fly in the right place. Any previous version will be removed.
-envsubst '${EASYBUILD_SOURCEPATH},${EASYBUILD_INSTALLPATH},${CORES},${MODULEPATH},${EB_VERSION}' < ${BASEDIR}/software-head.tmpl > ${SOFTWARE} 
+envsubst '${EASYBUILD_SOURCEPATH},${EASYBUILD_INSTALLPATH},${CORES},${EASYBUILD_BUILDPATH},${MODULEPATH},${EB_VERSION}' < ${BASEDIR}/software-head.tmpl > ${SOFTWARE} 
 if [ -s ${SW_NAME} ]; then
         SW_LIST=$(cat ${SW_NAME})
         export SW_LIST
