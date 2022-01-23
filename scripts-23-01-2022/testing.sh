@@ -85,7 +85,7 @@ fi
 # We need to export these variables so we can modify the template for the software to be installed
 export EASYBUILD_SOURCEPATH
 export EASYBUILD_INSTALLPATH
-export CORES
+export EASYBUILD_BUILDPATH
 export MODULEPATH
 export EB_VERSION
 # export SW_LIST # we do this further down!
