@@ -26,7 +26,7 @@ SOFTWARE_HOME="${SOFTWARE_INSTDIR}/${ARCH}"
 # Which container name to be used:
 CONTAINER_VERSION="eb-4.4.2-Lmod-ubuntu20-LTR-3.8.4.sif"
 # Which EasyBuild version to be used for the software installation:
-EB_VERSION="4.5.1"
+EB_VERSION="4.5.2"
 # We might need to bind an additional external directory into the container:
 BINDDIR="/software:/software"
 SOURCEDIR="/software/easybuild/sources:/apps/easybuild/sources"

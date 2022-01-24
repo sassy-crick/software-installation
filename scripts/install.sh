@@ -28,7 +28,7 @@ SOFTWARE_HOME="${SOFTWARE_INSTDIR}/${ARCH}"
 # Which container name to be used:
 CONTAINER_VERSION="eb-4.4.2-Lmod-ubuntu20-LTR-3.8.4.sif"
 # Which EasyBuild version to be used for the software installation:
-EB_VERSION="4.5.1"
+EB_VERSION="4.5.2"
 # Where is the list of the software to be installed:
 # The first one is for a list of EasyConfig files
 SW_NAME="softwarelist.txt"
