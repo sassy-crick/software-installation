@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# setting up the environment:
+shopt -s expand_aliases
+export EASYBUILD_SOURCEPATH="${EASYBUILD_SOURCEPATH}"
+export EASYBUILD_INSTALLPATH="${EASYBUILD_INSTALLPATH}"
+export EASYBUILD_BUILDPATH="${EASYBUILD_BUILDPATH}"
+export EASYBUILD_TMPDIR="${EASYBUILD_BUILDPATH}"
+export EASYBUILD_PARALLEL="${CORES}"
+export MODULEPATH="${MODULEPATH}"
+export EASYBUILD_ACCEPT_EULA_FOR="Intel-oneAPI,NVHPC"
+alias eb="eb --robot --download-timeout=100"
+export PYTHONIOENCODING="utf-8"
+
+# somehow the cluster's environment modules go through
+# into the container. So we simply source the script again
+ml use ${MODULEPATH}
+
+# loading the right EasyBuild module:
+ml EasyBuild/${EB_VERSION}
+
+# check what we got
+eb --version
+
+# check the loaded modules
+ml
+

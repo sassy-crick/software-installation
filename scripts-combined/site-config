@@ -1,0 +1,73 @@
+# This file contains all the site specific configurations,
+# like for example the various paths, which partition to be used,
+# the amount of requestable resources like cores, memory and time.
+# Others may be added there as well.
+# The idea is to use that file so all the configurations are the same,
+# regardless whether they are in the Singularity Definition file or in
+# the installation script. 
+# 22.1.2022 more platforms added so script can build now on all available
+# platforms
+
+# Variables SLURM concerning
+# The 'PLATFORM' is the various platforms which are being build
+# with the functions below the definition of them
+# PLATFORMS="haswell skylake zen2 cascadelake graviton2"
+PLATFORMS="haswell icelake zen2"
+
+function haswell {
+PARTITION="generic"
+CORES="8"
+ARCH="haswell"
+}
+
+function icelake {
+PARTITION="cpu"
+CORES="36"
+ARCH="icelake"
+}
+
+function zen2 {
+PARTITION="4gpu --gres=gpu:1"
+CORES="36"
+ARCH="zen2"
+}
+
+function cascadelake {
+CONSTRAINT="c6i.2xlarge"
+CORES="8"
+ARCH="cascadelake"
+}
+
+function graviton2  {
+CONSTRAINT="c6g.2xlarge"
+CORES="8"
+ARCH="graviton2"
+}
+
+# This is for the overall build process log files, not the individual builds!
+# Currently not being used
+# LOGFILES="/mnt/shared/home/sassy-crick/testbuild/logs"
+
+# What is it we want to use to install? Only EasyBuild or EESSI or both?
+# Possible choices are EB, EESSI and BOTH 
+INSTALLING="BOTH"
+
+# These bits are needed for the software installation using EasyBuild:
+
+# Where to install the software:
+SOFTWARE_INSTDIR="/users/k1930241/software"
+# Which container name to be used:
+CONTAINER_VERSION="eb-4.4.2-Lmod-ubuntu20-LTR-3.8.4.sif"
+# We might need to bind an additional external directory into the container:
+BINDDIR="/users/k1930241/software:/software"
+
+# Variables EasyBuild concerning:
+# Some variables need to come from SLURM above!
+EASYBUILD_SOURCEPATH="/software/easybuild/sources"
+EASYBUILD_INSTALLPATH="/apps/easybuild"
+EASYBUILD_BUILDPATH="/dev/shm/eb-2"
+EASYBUILD_TMPDIR="/dev/shm/eb-2"
+EASYBUILD_PARALLEL="$CORES"
+EB_VERSION="4.5.2"
+MODULEPATH="/apps/easybuild/modules/all"
+
