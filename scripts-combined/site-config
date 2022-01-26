@@ -21,13 +21,13 @@ ARCH="haswell"
 }
 
 function icelake {
-PARTITION="cpu"
+PARTITION="4gpu --gres=gpu:1"
 CORES="36"
 ARCH="icelake"
 }
 
 function zen2 {
-PARTITION="4gpu --gres=gpu:1"
+PARTITION="cpu"
 CORES="36"
 ARCH="zen2"
 }
@@ -65,8 +65,8 @@ BINDDIR="/users/k1930241/software:/software"
 # Some variables need to come from SLURM above!
 EASYBUILD_SOURCEPATH="/software/easybuild/sources"
 EASYBUILD_INSTALLPATH="/apps/easybuild"
-EASYBUILD_BUILDPATH="/dev/shm/eb-2"
-EASYBUILD_TMPDIR="/dev/shm/eb-2"
+EASYBUILD_BUILDPATH="/dev/shm/$USER"
+EASYBUILD_TMPDIR="/dev/shm/$USER"
 EASYBUILD_PARALLEL="$CORES"
 EB_VERSION="4.5.2"
 MODULEPATH="/apps/easybuild/modules/all"
