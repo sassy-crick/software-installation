@@ -50,3 +50,4 @@ It needs to be tested on Lustre but that does currently not work as `fusermount`
 
 Also, as mentioned above, the `archpsec.py` needs to be installed in a better way.
 
+Finally, it somehow would be nice to include `--cuda-compute-capabilities=8.0` for the A100 GPU builds automatically to make it a bit more fool-proved. 
